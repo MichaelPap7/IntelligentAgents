@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockGameObject: {fileID: 136656920844690106, guid: 0e4ebb8938047b04dba695cf2d1c1a60, type: 3}
+  objectToSpawn: {fileID: 5203568060135454463, guid: b0e6f0078194b3e45a12e49217047ff9, type: 3}
   worldSizeX: 50
   worldSizeZ: 30
 --- !u!4 &334481781
@@ -339,7 +340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 25, y: 32, z: 15}
+  m_LocalPosition: {x: 25, y: 40, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
