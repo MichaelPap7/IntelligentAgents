@@ -1,11 +1,15 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Runtime.Serialization.Formatters.Binary;
+using System;
 
 public class GeneratedGrid : MonoBehaviour
 {
 
     public GameObject blockGameObject;
     public GameObject objectToSpawn;
+
+    public ConcurrentDictionary<Tuple<int, int>, Cube> Field = new ConcurrentDictionary<Tuple<int, int>, Cube>();
 
     public int worldSizeX = 40;
     public int worldSizeZ = 40;
