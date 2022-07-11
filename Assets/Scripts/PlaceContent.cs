@@ -8,4 +8,6 @@ public enum PlaceContent
     Vilage2 = 6,
     Empty = 7,
     UnKnown = 8,
+    Treasure = 9,
+    Energy = 10,
 }

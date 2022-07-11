@@ -1,6 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO; 
+using System.Collections.Concurrent;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 
 public static class GameManager
 {
@@ -14,11 +20,26 @@ public static class GameManager
     public static int energy_pot_price = 3;
     public static int map_price = 3;
     public static int energy_pot_restoration = 10;
+    
+    //InputValues
+    public static int Width;
+    public static int Height;
+    public static int TreasuresCount;
+    public static int EnergyFountainsCount;
+    public static int NumberOfAgents;
+    public static float GameSpeed;
+
+    //public bool IsStarted = false;
+    //public bool IsCompleted = false;
 
     public static bool end = false;
     public static void Setup(int x, int y, int treasures, int energies, int number_agents, Supplies villageA_Supplies, Supplies villageB_Supplies)
     {
-
+        Width = x;
+        Height = y;
+        TreasuresCount = treasures;
+        EnergyFountainsCount = energies;
+        NumberOfAgents = number_agents;
         VillageA_Supplies = villageA_Supplies;
         VillageB_Supplies = villageB_Supplies;
         GenerateField(x, y, treasures, energies, number_agents * 2);
@@ -77,10 +98,9 @@ public static class GameManager
     public static string StartGame()
     {
 
-
         while (!end)
         {
-            //Thread.Sleep(100);
+            Thread.Sleep(GameSpeed == 1 ? 1000 : GameSpeed == 0.5 ? 2000 : GameSpeed == 2 ? 500 : GameSpeed == 5? 100 : 10);
             for (int i = 0; i < AgentsV1.Count - 1; i++)
             {
 
@@ -181,11 +201,11 @@ public static class GameManager
         {
             result.Add(field[key]);
         }
-        return JsonConvert.SerializeObject(result);
+        return JsonUtility.ToJson(result);;
     }
     public static void GenerateField(int x, int y, int treasures, int energies, int agents_number)
     {
-        Random random = new Random();
+        System.Random random = new System.Random();
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)

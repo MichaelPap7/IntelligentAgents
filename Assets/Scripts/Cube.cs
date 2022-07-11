@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Cube
 {
     public int x { get; set; }
@@ -6,7 +8,5 @@ public class Cube
 
     public int Quantity { get; set; }
 
-    public int coord_x { get; set; }
-    public int coord_y { get; set; }
-    public int coord_z { get; set; }
+    public Vector3 Position;
 }
