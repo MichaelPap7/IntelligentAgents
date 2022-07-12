@@ -13,4 +13,5 @@ public class Cube
     public float coord_x { get; set; }
     public float coord_y { get; set; }
     public float coord_z { get; set; }
+
 }

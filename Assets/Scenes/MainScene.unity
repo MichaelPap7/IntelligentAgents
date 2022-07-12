@@ -158,11 +158,12 @@ MonoBehaviour:
   village1GameObject: {fileID: 4801196382327148478, guid: 9fc6531668ba0b24cb460efb598928e9, type: 3}
   village2GameObject: {fileID: 827309796914793995, guid: 0f62289236c8c6343a4716b985dc8cc1, type: 3}
   energyGameObject: {fileID: 6353758576680749137, guid: 2d3e81c93eb02ff4390b630ea32049ad, type: 3}
-  treasureGameObject: {fileID: 0}
+  treasureGameObject: {fileID: 6956421025060324869, guid: 262dee19d8d024d4688168f8da1fb96e, type: 3}
   ironGameObject: {fileID: 2959461321853654081, guid: 55674989c8f4d824a97ce066ab2dc815, type: 3}
   goldGameObject: {fileID: 6928448609387862142, guid: 9d6933d9ee2290342b55e0c5bfcfa56b, type: 3}
   cropGameObject: {fileID: 1036864038494085820, guid: 52e3e677862d0a14ba1d74df1978f2f9, type: 3}
   objectToSpawn: {fileID: 7719255337993644491, guid: 8d4967802d7222342a7ab11ca00db49c, type: 3}
+  IsStarted: 0
   worldSizeX: 50
   worldSizeZ: 30
 --- !u!4 &334481781

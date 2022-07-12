@@ -13,6 +13,7 @@ public static class GameManager
     public static ConcurrentDictionary<Tuple<int, int>, Cube> Field = new ConcurrentDictionary<Tuple<int, int>, Cube>();
     public static ConcurrentDictionary<Tuple<int, int>, Cube> DefaultA = new ConcurrentDictionary<Tuple<int, int>, Cube>();
     public static ConcurrentDictionary<Tuple<int, int>, Cube> DefaultB = new ConcurrentDictionary<Tuple<int, int>, Cube>();
+    public static ConcurrentDictionary<Tuple<int, int>, GameObject> Resources = new ConcurrentDictionary<Tuple<int, int>, GameObject>();
     public static List<Agent1> AgentsV1 = new List<Agent1>();
     public static List<Agent1> AgentsV2 = new List<Agent1>();
     public static Supplies VillageA_Supplies = new Supplies();
@@ -20,6 +21,7 @@ public static class GameManager
     public static int energy_pot_price = 3;
     public static int map_price = 3;
     public static int energy_pot_restoration = 10;
+    public static GeneratedGrid Script;
     
     //InputValues
     public static int Width;
@@ -117,6 +119,9 @@ public static class GameManager
         }
     }
     */
+    public static void DestroyResource(Tuple<int,int> pos){
+        Script.DestroyResource(pos);
+    }
     public static string StartGame()
     {
 

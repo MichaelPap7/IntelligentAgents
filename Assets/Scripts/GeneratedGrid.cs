@@ -57,26 +57,30 @@ public class GeneratedGrid : MonoBehaviour
                 switch(GameManager.Field[Tuple.Create(x, z)].value)
                 {
                     case PlaceContent.Wood:
-                        SpawnObject(rpos, objectToSpawn);
+                        SpawnObject(rpos, objectToSpawn,x,z);
                         break;
                     case PlaceContent.Crop:
-                        SpawnObject(rpos, cropGameObject);
+                        SpawnObject(rpos, cropGameObject,x,z);
                         break;
                     case PlaceContent.Steel:
-                        SpawnObject(rpos, ironGameObject);
+                        SpawnObject(rpos, ironGameObject,x,z);
                         break;
                     case PlaceContent.Gold:
-                        SpawnObject(rpos, goldGameObject);
+                        SpawnObject(rpos, goldGameObject,x,z);
                         break;
                     case PlaceContent.Vilage1:
+                        SpawnObject(rpos, village1GameObject,x,z);
                         break;
                     case PlaceContent.Vilage2:
+                        SpawnObject(rpos, village2GameObject,x,z);
                         break;
                     case PlaceContent.Empty:
                         break;
                     case PlaceContent.Treasure:
+                        SpawnObject(rpos, treasureGameObject,x,z);
                         break;
                     case PlaceContent.Energy:
+                        SpawnObject(rpos, energyGameObject,x,z);
                         break;
                 }
                 GameObject block = Instantiate(blockGameObject, pos, Quaternion.identity) as GameObject;
@@ -102,7 +106,8 @@ public class GeneratedGrid : MonoBehaviour
             GameObject temp1 = Instantiate(agent2GameObject, new Vector3(GameManager.Field[Tuple.Create(ag2.Position.Item1, ag2.Position.Item2)].coord_x, GameManager.Field[Tuple.Create(ag2.Position.Item1, ag2.Position.Item2)].coord_y, GameManager.Field[Tuple.Create(ag2.Position.Item1, ag2.Position.Item2)].coord_z), Quaternion.identity) as GameObject;
             ag2.Transform = temp1;
         }
-        GameManager.GameSpeed = 1.0f;
+        GameManager.Script = this;
+        GameManager.GameSpeed = 5.0f;
     }
 
     void Update() {
@@ -110,14 +115,22 @@ public class GeneratedGrid : MonoBehaviour
         {
             Thread.Sleep(GameManager.GameSpeed == 1 ? 1000 : GameManager.GameSpeed == 0.5 ? 2000 : GameManager.GameSpeed == 2 ? 500 : GameManager.GameSpeed == 5 ? 100 : 10);
             Debug.Log("Agents Run");
-            for (int i = 0; i < GameManager.AgentsV1.Count - 1; i++)
+            for (int i = 0; i < GameManager.AgentsV1.Count; i++)
             {
-
-                GameManager.AgentsV1[i].Step();
+                if(!GameManager.AgentsV1[i].Stopped){
+                    GameManager.AgentsV1[i].Step();
+                }
+                else{
+                    Destroy(GameManager.AgentsV1[i].Transform);
+                }
+                
                 if (!GameManager.AgentsV2[i].Stopped)
                 {
                     GameManager.AgentsV2[i].Step();
                     //AgentsV2[i].PrintFieldView();
+                }
+                 else{
+                    Destroy(GameManager.AgentsV2[i].Transform);
                 }
 
             }
@@ -154,12 +167,15 @@ public class GeneratedGrid : MonoBehaviour
         }
         Debug.Log("Unknown");
 
-
     }
-
-    private void SpawnObject (Vector3 pos, GameObject spawnObject) {
+    public void DestroyResource(Tuple<int,int> pos){
+        if(GameManager.Resources.ContainsKey(pos))
+            Destroy(GameManager.Resources[pos]);
+    }
+    private void SpawnObject (Vector3 pos, GameObject spawnObject,int x,int z) {
 
         GameObject toPlaceObject = Instantiate(spawnObject, pos, Quaternion.identity);
+        GameManager.Resources[Tuple.Create(x, z)] = toPlaceObject;
     }
 
     private Vector3 ObjectSpawnLocation () {

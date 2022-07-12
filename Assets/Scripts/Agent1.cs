@@ -23,6 +23,7 @@ public class Agent1
 
     public GameObject Transform;
     
+    private bool Interaction = false;
     public void Step()
     {
         var action = Observe();
@@ -61,7 +62,6 @@ public class Agent1
             else
             {
                 Stopped = true;
-                Destroy(Transform);
             }
         }
 
@@ -122,7 +122,7 @@ public class Agent1
     private void BuyMapInfo()
     {
         var agent = FindNearbyAgent();
-
+        Interaction = true;
         var field = agent.BuyMap(this);
         if (field == null)
         {
@@ -139,8 +139,6 @@ public class Agent1
         {
             MergeKnowledge(field);
         }
-
-
 
     }
 
@@ -217,17 +215,30 @@ public class Agent1
 
     private void Collect()
     {
+        if(Role != PlaceContent.Empty)
+            Debug.Log("WWWWWWWW" + Role.ToString());
         if (Role != PlaceContent.Empty ? Field[Position].value == Role : IsOre(Field[Position].value) && Field[Position].Quantity > 0)
         {
             Cargo = Field[Position].value;
             GameManager.Field[Position].Quantity--;
             Field[Position].Quantity--;
+            if(Field[Position].Quantity == 0){
+                GameManager.DestroyResource(Position);
+            }
+            if(Role != PlaceContent.Empty){
+                Debug.Log("WWWWWWWWWWW Collected");
+                Debug.Log("Cargo"+Cargo.ToString());
+            }
+                
         }
         if (IsEnergyThirsty() && Field[Position].value == PlaceContent.Energy)
         {
             GameManager.Field[Position].Quantity--;
             Field[Position].Quantity--;
-            Energy += Field.Count / 2;
+            Energy += Field.Values.Count / 2;
+            if(Field[Position].Quantity == 0){
+                GameManager.DestroyResource(Position);
+            }
         }
     }
 
@@ -243,6 +254,7 @@ public class Agent1
     private void BuyEnergy()
     {
         bool succeed = TryBuyEnergy();
+        Interaction = true;
         if (succeed)
             return;
         if (Cargo == PlaceContent.Empty)
@@ -261,6 +273,7 @@ public class Agent1
             }
 
         }
+        
     }
 
     private void MoveToEnergy()
@@ -459,11 +472,11 @@ public class Agent1
         {
             action = Action.Collect;
         }
-        else if (IsToBuyMapInfo())
+        else if (IsToBuyMapInfo() && !Interaction)
         {
             action = Action.BuyMapInfo;
         }
-        else if (IsToBuyEnergy())
+        else if (IsToBuyEnergy() && !Interaction)
         {
             action = Action.BuyEnergy;
         }
@@ -478,7 +491,9 @@ public class Agent1
         else
         {
             action = Action.MoveToSource;
+            Interaction = false;
         }
+        Debug.Log(action.ToString());
         return action;
     }
 
