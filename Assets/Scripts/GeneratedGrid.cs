@@ -4,6 +4,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
+using System.Linq;
 
 public class GeneratedGrid : MonoBehaviour
 {
@@ -104,12 +106,55 @@ public class GeneratedGrid : MonoBehaviour
     }
 
     void Update() {
-        if(!IsStarted){
-            GameManager.StartGame();
-            IsStarted = true;
+        if (!GameManager.end)
+        {
+            Thread.Sleep(GameManager.GameSpeed == 1 ? 1000 : GameManager.GameSpeed == 0.5 ? 2000 : GameManager.GameSpeed == 2 ? 500 : GameManager.GameSpeed == 5 ? 100 : 10);
+            Debug.Log("Agents Run");
+            for (int i = 0; i < GameManager.AgentsV1.Count - 1; i++)
+            {
+
+                GameManager.AgentsV1[i].Step();
+                if (!GameManager.AgentsV2[i].Stopped)
+                {
+                    GameManager.AgentsV2[i].Step();
+                    //AgentsV2[i].PrintFieldView();
+                }
+
+            }
+            //if (!AgentsV2[0].Stopped)
+            //{
+            //    AgentsV2[0].Step();
+            //    AgentsV2[0].PrintFieldView();
+            //}
+            Debug.Log("CheckEndgame");
+            if (GameManager.EndGame() == "A")
+            {
+                Debug.Log("VillageA");
+            }
+            if (GameManager.EndGame() == "B")
+            {
+                Debug.Log("VillageB");
+            }
+            if (GameManager.Field.Values.All(x => x.Quantity == 0) && GameManager.EndGame() != "A" && GameManager.EndGame() != "B")
+            {
+                Debug.Log("VillageA");
+                Debug.Log("Crop" + GameManager.VillageA_Supplies.Crop_Supplies.ToString());
+                Debug.Log("Wood" + GameManager.VillageA_Supplies.Wood_Supplies.ToString());
+                Debug.Log("Steel" + GameManager.VillageA_Supplies.Steel_Supplies.ToString());
+                Debug.Log("Gold" + GameManager.VillageA_Supplies.Gold_Supplies.ToString());
+
+                Debug.Log("VillageB");
+                Debug.Log("Crop" + GameManager.VillageB_Supplies.Crop_Supplies.ToString());
+                Debug.Log("Wood" + GameManager.VillageB_Supplies.Wood_Supplies.ToString());
+                Debug.Log("Steel" + GameManager.VillageB_Supplies.Steel_Supplies.ToString());
+                Debug.Log("Gold" + GameManager.VillageB_Supplies.Gold_Supplies.ToString());
+
+                Debug.Log("Unknown");
+            }
         }
-        
-        
+        Debug.Log("Unknown");
+
+
     }
 
     private void SpawnObject (Vector3 pos, GameObject spawnObject) {
