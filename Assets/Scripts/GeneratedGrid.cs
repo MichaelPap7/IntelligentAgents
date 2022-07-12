@@ -20,6 +20,7 @@ public class GeneratedGrid : MonoBehaviour
     public GameObject cropGameObject;
     public GameObject objectToSpawn;
     
+    public bool IsStarted = false;
 
     public ConcurrentDictionary<Tuple<int, int>, Cube> Field = new ConcurrentDictionary<Tuple<int, int>, Cube>();
 
@@ -100,11 +101,13 @@ public class GeneratedGrid : MonoBehaviour
             ag2.Transform = temp1;
         }
         GameManager.GameSpeed = 1.0f;
-        GameManager.StartGame();
     }
 
     void Update() {
-
+        if(!IsStarted){
+            GameManager.StartGame();
+            IsStarted = true;
+        }
         
         
     }
