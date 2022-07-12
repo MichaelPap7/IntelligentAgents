@@ -61,6 +61,7 @@ public class Agent1
             else
             {
                 Stopped = true;
+                Destroy(Transform);
             }
         }
 
