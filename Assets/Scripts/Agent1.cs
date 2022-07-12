@@ -20,6 +20,9 @@ public class Agent1
     private Action LastAction = Action.MoveToSource;
     private Tuple<int, int> Waypoint;
     private PlaceContent Cargo = PlaceContent.Empty;
+
+    public GameObject Transform;
+    
     public void Step()
     {
         var action = Observe();
@@ -341,11 +344,13 @@ public class Agent1
             if (remainingx < 0)
             {
                 Position = Tuple.Create(Position.Item1 - 1, Position.Item2);
+                Transform.transform.position = new Vector3(GameManager.Field[Position].coord_x,GameManager.Field[Position].coord_y,GameManager.Field[Position].coord_z);
                 counter--;
             }
             else
             {
                 Position = Tuple.Create(Position.Item1 + 1, Position.Item2);
+                Transform.transform.position = new Vector3(GameManager.Field[Position].coord_x,GameManager.Field[Position].coord_y,GameManager.Field[Position].coord_z);
                 counter--;
             }
 
@@ -357,11 +362,13 @@ public class Agent1
             if (remainingy < 0)
             {
                 Position = Tuple.Create(Position.Item1, Position.Item2 - 1);
+                Transform.transform.position = new Vector3(GameManager.Field[Position].coord_x,GameManager.Field[Position].coord_y,GameManager.Field[Position].coord_z);
                 counter--;
             }
             else
             {
                 Position = Tuple.Create(Position.Item1, Position.Item2 + 1);
+                Transform.transform.position = new Vector3(GameManager.Field[Position].coord_x,GameManager.Field[Position].coord_y,GameManager.Field[Position].coord_z);
                 counter--;
             }
         }

@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+[Serializable]
 
 public class Cube
 {
@@ -8,5 +10,7 @@ public class Cube
 
     public int Quantity { get; set; }
 
-    public Vector3 Position;
+    public float coord_x { get; set; }
+    public float coord_y { get; set; }
+    public float coord_z { get; set; }
 }

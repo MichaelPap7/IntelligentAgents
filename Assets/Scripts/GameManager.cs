@@ -95,12 +95,35 @@ public static class GameManager
             Bcounter++;
         }
     }
+    /*
+     public static void GenerateAgents(GameObject asset1,GameObject asset2)
+    {
+
+        foreach(var ag1 in AgentsV1)
+        {
+            GameObject temp = Instantiate(asset1, new Vector3(Field[Tuple.Create(ag1.Position.Item1,ag1.Position.Item2)].coord_x, Field[Tuple.Create(ag1.Position.Item1, ag1.Position.Item2)].coord_y, Field[Tuple.Create(ag1.Position.Item1, ag1.Position.Item2)].coord_z), Quaternion.identity) as GameObject;
+            temp.AddComponent(typeof(Agent1));
+            var script = temp.GetComponent(typeof(Agent1));
+            script = ag1;
+            AgentsV1Obj.Add(temp);
+        }
+        foreach (var ag1 in AgentsV1)
+        {
+            GameObject temp1 = Instantiate(asset2, new Vector3(1, 2, 3), Quaternion.identity) as GameObject;
+            temp1.AddComponent(typeof(Agent1));
+            var script1 = temp1.GetComponent(typeof(Agent1));
+            script1 = ag1;
+            AgentsV1Obj.Add(temp1);
+        }
+    }
+    */
     public static string StartGame()
     {
 
         while (!end)
         {
             Thread.Sleep(GameSpeed == 1 ? 1000 : GameSpeed == 0.5 ? 2000 : GameSpeed == 2 ? 500 : GameSpeed == 5? 100 : 10);
+            Debug.Log("Agents Run");
             for (int i = 0; i < AgentsV1.Count - 1; i++)
             {
 
@@ -117,7 +140,7 @@ public static class GameManager
             //    AgentsV2[0].Step();
             //    AgentsV2[0].PrintFieldView();
             //}
-
+            Debug.Log("CheckEndgame");
             if (EndGame() == "A")
             {
                 return "VillageA";
