@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Concurrent;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
@@ -9,6 +10,8 @@ using System.Linq;
 public class GeneratedGrid : MonoBehaviour
 {
 
+    public GameObject agentsA;
+    public GameObject agentListA;
     public GameObject blockGameObject;
     public GameObject agent1GameObject;
     public GameObject agent2GameObject;
@@ -20,6 +23,7 @@ public class GeneratedGrid : MonoBehaviour
     public GameObject goldGameObject;
     public GameObject cropGameObject;
     public GameObject objectToSpawn;
+    public GameObject fogOfWar;
     
     public bool IsStarted = false;
 
@@ -108,6 +112,16 @@ public class GeneratedGrid : MonoBehaviour
         }
         GameManager.Script = this;
         GameManager.GameSpeed = 5.0f;
+
+        for (int i = 0; i < GameManager.AgentsV2.Count; i++){
+            int tempInt = i;
+            GameObject button = (GameObject) Instantiate (agentsA);
+            button.GetComponentInChildren<Text>().text = GameManager.AgentsV2[i].Name;
+            button.GetComponent<Button>().onClick.AddListener(
+                () => {PointOfView(GameManager.AgentsV2[tempInt].Name);}
+            );
+            button.transform.parent = agentListA.transform;
+        }
     }
     void PointOfView(string agentName)
     {
@@ -160,7 +174,7 @@ public class GeneratedGrid : MonoBehaviour
         foreach(var key in field.Keys)
         {
             var rpos = new Vector3(field[key].coord_x, field[key].coord_y, field[key].coord_z);
-            if (field[key].Quantity > 0)
+            if (field[key].Quantity > 0 || field[key].value == PlaceContent.Vilage1 || field[key].value == PlaceContent.Vilage2 || field[key].value == PlaceContent.UnKnown)
             {
                 switch (field[key].value)
                 {
@@ -189,6 +203,9 @@ public class GeneratedGrid : MonoBehaviour
                         break;
                     case PlaceContent.Energy:
                         SpawnObject(rpos, energyGameObject, key.Item1, key.Item2);
+                        break;
+                    case PlaceContent.UnKnown:
+                        SpawnObject(rpos, fogOfWar, key.Item1, key.Item2);
                         break;
                 }
             }
