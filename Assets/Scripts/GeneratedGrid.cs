@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Linq;
 
@@ -118,7 +117,8 @@ public class GeneratedGrid : MonoBehaviour
         {
             try
             {
-                agent1 = AgentsV1.Single(x => x.Name == agentName).ToList();
+                agent1 = GameManager.AgentsV1.Single(x => x.Name == agentName);
+                
             }
             catch(Exception e)
             {
@@ -130,7 +130,7 @@ public class GeneratedGrid : MonoBehaviour
         {
             try
             {
-                agent1 = AgentsV2.Single(x => x.Name == agentName).ToList();
+                agent1 = GameManager.AgentsV2.Single(x => x.Name == agentName);
             }
             catch (Exception e)
             {
@@ -149,42 +149,46 @@ public class GeneratedGrid : MonoBehaviour
         //ClearPreviousValues
         foreach(var key in GameManager.Resources.Keys)
         {
-            DestroyResource(resourse.Value);
+            if (GameManager.Resources[key] != null)
+            {
+                DestroyResource(key);
+            }
+            
         }
-        GameManager.Resource.Clear();
+        GameManager.Resources.Clear();
         //SetNewValues
         foreach(var key in field.Keys)
         {
-            var rpos = new Vector3(field[key].coord_x, field[key].coord_y, field[key].coord_z)
+            var rpos = new Vector3(field[key].coord_x, field[key].coord_y, field[key].coord_z);
             if (field[key].Quantity > 0)
             {
                 switch (field[key].value)
                 {
                     case PlaceContent.Wood:
-                        SpawnObject(rpos, objectToSpawn, x, z);
+                        SpawnObject(rpos, objectToSpawn, key.Item1, key.Item2);
                         break;
                     case PlaceContent.Crop:
-                        SpawnObject(rpos, cropGameObject, x, z);
+                        SpawnObject(rpos, cropGameObject, key.Item1, key.Item2);
                         break;
                     case PlaceContent.Steel:
-                        SpawnObject(rpos, ironGameObject, x, z);
+                        SpawnObject(rpos, ironGameObject, key.Item1, key.Item2);
                         break;
                     case PlaceContent.Gold:
-                        SpawnObject(rpos, goldGameObject, x, z);
+                        SpawnObject(rpos, goldGameObject, key.Item1, key.Item2);
                         break;
                     case PlaceContent.Vilage1:
-                        SpawnObject(rpos, village1GameObject, x, z);
+                        SpawnObject(rpos, village1GameObject, key.Item1, key.Item2);
                         break;
                     case PlaceContent.Vilage2:
-                        SpawnObject(rpos, village2GameObject, x, z);
+                        SpawnObject(rpos, village2GameObject, key.Item1, key.Item2);
                         break;
                     case PlaceContent.Empty:
                         break;
                     case PlaceContent.Treasure:
-                        SpawnObject(rpos, treasureGameObject, x, z);
+                        SpawnObject(rpos, treasureGameObject, key.Item1, key.Item2);
                         break;
                     case PlaceContent.Energy:
-                        SpawnObject(rpos, energyGameObject, x, z);
+                        SpawnObject(rpos, energyGameObject, key.Item1, key.Item2);
                         break;
                 }
             }
@@ -210,8 +214,8 @@ public class GeneratedGrid : MonoBehaviour
                     GameManager.AgentsV2[i].Step();
                     //AgentsV2[i].PrintFieldView();
                 }
-                 else{
-                    Destroy(GameManager.AgentsV2[i].Transform);
+                else{
+                Destroy(GameManager.AgentsV2[i].Transform);
                 }
 
             }
@@ -221,7 +225,8 @@ public class GeneratedGrid : MonoBehaviour
             }
             else if (FullViewEnabled == true)
             {
-
+                ChangeViewField(GameManager.Field);
+                FullViewEnabled = false;
             }
             //if (!AgentsV2[0].Stopped)
             //{
@@ -260,6 +265,7 @@ public class GeneratedGrid : MonoBehaviour
     public void DestroyResource(Tuple<int,int> pos){
         if(GameManager.Resources.ContainsKey(pos))
             Destroy(GameManager.Resources[pos]);
+        GameManager.Resources.TryRemove(pos, out var value);
     }
     private void SpawnObject (Vector3 pos, GameObject spawnObject,int x,int z) {
 
