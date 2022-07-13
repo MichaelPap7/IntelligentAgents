@@ -24,7 +24,8 @@ public class GeneratedGrid : MonoBehaviour
     
     public bool IsStarted = false;
 
-    public ConcurrentDictionary<Tuple<int, int>, Cube> Field = new ConcurrentDictionary<Tuple<int, int>, Cube>();
+    public Agent1 AgentView;
+    public bool FullViewEnabled = false;
 
     public int worldSizeX = 40;
     public int worldSizeZ = 40;
@@ -109,7 +110,87 @@ public class GeneratedGrid : MonoBehaviour
         GameManager.Script = this;
         GameManager.GameSpeed = 5.0f;
     }
+    void PointOfView(string agentName)
+    {
+        Agent1 agent1 = new Agent1();
 
+        if(agentName[0] == 'A')
+        {
+            try
+            {
+                agent1 = AgentsV1.Single(x => x.Name == agentName).ToList();
+            }
+            catch(Exception e)
+            {
+                agent1 = null;
+            }
+           
+        }
+        else if(agentName[0] == 'B')
+        {
+            try
+            {
+                agent1 = AgentsV2.Single(x => x.Name == agentName).ToList();
+            }
+            catch (Exception e)
+            {
+                agent1 = null;
+            }            
+        }
+        if (agent1 != null)
+        {
+            AgentView = agent1;
+            FullViewEnabled = true;
+        }
+        
+    }
+    void ChangeViewField(ConcurrentDictionary<Tuple<int, int>, Cube> field)
+    {
+        //ClearPreviousValues
+        foreach(var key in GameManager.Resources.Keys)
+        {
+            DestroyResource(resourse.Value);
+        }
+        GameManager.Resource.Clear();
+        //SetNewValues
+        foreach(var key in field.Keys)
+        {
+            var rpos = new Vector3(field[key].coord_x, field[key].coord_y, field[key].coord_z)
+            if (field[key].Quantity > 0)
+            {
+                switch (field[key].value)
+                {
+                    case PlaceContent.Wood:
+                        SpawnObject(rpos, objectToSpawn, x, z);
+                        break;
+                    case PlaceContent.Crop:
+                        SpawnObject(rpos, cropGameObject, x, z);
+                        break;
+                    case PlaceContent.Steel:
+                        SpawnObject(rpos, ironGameObject, x, z);
+                        break;
+                    case PlaceContent.Gold:
+                        SpawnObject(rpos, goldGameObject, x, z);
+                        break;
+                    case PlaceContent.Vilage1:
+                        SpawnObject(rpos, village1GameObject, x, z);
+                        break;
+                    case PlaceContent.Vilage2:
+                        SpawnObject(rpos, village2GameObject, x, z);
+                        break;
+                    case PlaceContent.Empty:
+                        break;
+                    case PlaceContent.Treasure:
+                        SpawnObject(rpos, treasureGameObject, x, z);
+                        break;
+                    case PlaceContent.Energy:
+                        SpawnObject(rpos, energyGameObject, x, z);
+                        break;
+                }
+            }
+            
+        }
+    }
     void Update() {
         if (!GameManager.end)
         {
@@ -132,6 +213,14 @@ public class GeneratedGrid : MonoBehaviour
                  else{
                     Destroy(GameManager.AgentsV2[i].Transform);
                 }
+
+            }
+            if(AgentView != null)
+            {
+                ChangeViewField(AgentView.Field);
+            }
+            else if (FullViewEnabled == true)
+            {
 
             }
             //if (!AgentsV2[0].Stopped)
