@@ -104,9 +104,11 @@ public class GeneratedGrid : MonoBehaviour
         {
             GameObject temp = Instantiate(agent1GameObject, new Vector3(GameManager.Field[Tuple.Create(ag1.Position.Item1, ag1.Position.Item2)].coord_x, GameManager.Field[Tuple.Create(ag1.Position.Item1, ag1.Position.Item2)].coord_y, GameManager.Field[Tuple.Create(ag1.Position.Item1, ag1.Position.Item2)].coord_z), Quaternion.identity) as GameObject;
             ag1.Transform = temp;
+
         }
         foreach (var ag2 in GameManager.AgentsV2)
         {
+            
             GameObject temp1 = Instantiate(agent2GameObject, new Vector3(GameManager.Field[Tuple.Create(ag2.Position.Item1, ag2.Position.Item2)].coord_x, GameManager.Field[Tuple.Create(ag2.Position.Item1, ag2.Position.Item2)].coord_y, GameManager.Field[Tuple.Create(ag2.Position.Item1, ag2.Position.Item2)].coord_z), Quaternion.identity) as GameObject;
             ag2.Transform = temp1;
         }
@@ -216,7 +218,7 @@ public class GeneratedGrid : MonoBehaviour
         if (!GameManager.end)
         {
             Thread.Sleep(GameManager.GameSpeed == 1 ? 1000 : GameManager.GameSpeed == 0.5 ? 2000 : GameManager.GameSpeed == 2 ? 500 : GameManager.GameSpeed == 5 ? 100 : 10);
-            Debug.Log("Agents Run");
+            //Debug.Log("Agents Run");
             for (int i = 0; i < GameManager.AgentsV1.Count; i++)
             {
                 if(!GameManager.AgentsV1[i].Stopped){
@@ -232,7 +234,7 @@ public class GeneratedGrid : MonoBehaviour
                     //AgentsV2[i].PrintFieldView();
                 }
                 else{
-                Destroy(GameManager.AgentsV2[i].Transform);
+                    Destroy(GameManager.AgentsV2[i].Transform);
                 }
 
             }
@@ -250,7 +252,7 @@ public class GeneratedGrid : MonoBehaviour
             //    AgentsV2[0].Step();
             //    AgentsV2[0].PrintFieldView();
             //}
-            Debug.Log("CheckEndgame");
+            //Debug.Log("CheckEndgame");
             if (GameManager.EndGame() == "A")
             {
                 Debug.Log("VillageA");
@@ -261,22 +263,22 @@ public class GeneratedGrid : MonoBehaviour
             }
             if (GameManager.Field.Values.All(x => x.Quantity == 0) && GameManager.EndGame() != "A" && GameManager.EndGame() != "B")
             {
-                Debug.Log("VillageA");
-                Debug.Log("Crop" + GameManager.VillageA_Supplies.Crop_Supplies.ToString());
-                Debug.Log("Wood" + GameManager.VillageA_Supplies.Wood_Supplies.ToString());
-                Debug.Log("Steel" + GameManager.VillageA_Supplies.Steel_Supplies.ToString());
-                Debug.Log("Gold" + GameManager.VillageA_Supplies.Gold_Supplies.ToString());
+                //Debug.Log("VillageA");
+                //Debug.Log("Crop" + GameManager.VillageA_Supplies.Crop_Supplies.ToString());
+                //Debug.Log("Wood" + GameManager.VillageA_Supplies.Wood_Supplies.ToString());
+                //Debug.Log("Steel" + GameManager.VillageA_Supplies.Steel_Supplies.ToString());
+                //Debug.Log("Gold" + GameManager.VillageA_Supplies.Gold_Supplies.ToString());
 
-                Debug.Log("VillageB");
-                Debug.Log("Crop" + GameManager.VillageB_Supplies.Crop_Supplies.ToString());
-                Debug.Log("Wood" + GameManager.VillageB_Supplies.Wood_Supplies.ToString());
-                Debug.Log("Steel" + GameManager.VillageB_Supplies.Steel_Supplies.ToString());
-                Debug.Log("Gold" + GameManager.VillageB_Supplies.Gold_Supplies.ToString());
+                //Debug.Log("VillageB");
+                //Debug.Log("Crop" + GameManager.VillageB_Supplies.Crop_Supplies.ToString());
+                //Debug.Log("Wood" + GameManager.VillageB_Supplies.Wood_Supplies.ToString());
+                //Debug.Log("Steel" + GameManager.VillageB_Supplies.Steel_Supplies.ToString());
+                //Debug.Log("Gold" + GameManager.VillageB_Supplies.Gold_Supplies.ToString());
 
                 Debug.Log("Unknown");
             }
         }
-        Debug.Log("Unknown");
+        //Debug.Log("Unknown");
 
     }
     public void DestroyResource(Tuple<int,int> pos){

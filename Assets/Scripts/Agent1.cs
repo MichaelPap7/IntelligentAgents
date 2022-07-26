@@ -27,6 +27,8 @@ public class Agent1
     public void Step()
     {
         var action = Observe();
+        if (Name == "A1")
+            Debug.Log(action);
         switch (action)
         {
             case Action.MoveToSource:
@@ -215,19 +217,13 @@ public class Agent1
 
     private void Collect()
     {
-        if(Role != PlaceContent.Empty)
-            Debug.Log("WWWWWWWW" + Role.ToString());
-        if (Role != PlaceContent.Empty ? Field[Position].value == Role : IsOre(Field[Position].value) && Field[Position].Quantity > 0)
+        if ((Role != PlaceContent.Empty ? Field[Position].value == Role : IsOre(Field[Position].value)) && Field[Position].Quantity > 0)
         {
             Cargo = Field[Position].value;
             GameManager.Field[Position].Quantity--;
             Field[Position].Quantity--;
             if(Field[Position].Quantity == 0){
                 GameManager.DestroyResource(Position);
-            }
-            if(Role != PlaceContent.Empty){
-                Debug.Log("WWWWWWWWWWW Collected");
-                Debug.Log("Cargo"+Cargo.ToString());
             }
                 
         }
@@ -422,7 +418,7 @@ public class Agent1
             {
                 return Waypoint;
             }
-            var ores = Field.Values.Where(x => Role != PlaceContent.Empty ? x.value == Role : IsOre(x.value) && x.Quantity > 0).ToList();
+            var ores = Field.Values.Where(x => (Role != PlaceContent.Empty ? x.value == Role : IsOre(x.value)) && x.Quantity > 0).ToList();
             if (ores.Count > 0)
             {
                 var place = ores.Where(x => (Math.Abs(Position.Item1 - x.x) + Math.Abs(Position.Item2 - x.y)) == ores.Min(x => Math.Abs(Position.Item1 - x.x) + Math.Abs(Position.Item2 - x.y))).ToList();
@@ -523,7 +519,7 @@ public class Agent1
 
     private bool CanCollect()
     {
-        return (Role != PlaceContent.Empty ? Field[Position].value == Role : IsOre(Field[Position].value) && Field[Position].Quantity > 0 && Cargo == PlaceContent.Empty) || (Field[Position].value == PlaceContent.Energy && IsEnergyThirsty());
+        return (Role != PlaceContent.Empty ? Field[Position].value == Role : IsOre(Field[Position].value)) && Field[Position].Quantity > 0 && Cargo == PlaceContent.Empty || (Field[Position].value == PlaceContent.Energy && IsEnergyThirsty());
 
     }
 
