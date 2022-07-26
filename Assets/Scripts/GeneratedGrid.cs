@@ -175,9 +175,12 @@ public class GeneratedGrid : MonoBehaviour
         //SetNewValues
         foreach(var key in field.Keys)
         {
-            var rpos = new Vector3(field[key].coord_x, field[key].coord_y, field[key].coord_z);
+            var rpos = new Vector3(GameManager.Field[key].coord_x, GameManager.Field[key].coord_y, GameManager.Field[key].coord_z);
             if (field[key].Quantity > 0 || field[key].value == PlaceContent.Vilage1 || field[key].value == PlaceContent.Vilage2 || field[key].value == PlaceContent.UnKnown)
             {
+                //Debug.Log(rpos.x);
+                //Debug.Log(rpos.y);
+                //Debug.Log(rpos.z);
                 switch (field[key].value)
                 {
                     case PlaceContent.Wood:

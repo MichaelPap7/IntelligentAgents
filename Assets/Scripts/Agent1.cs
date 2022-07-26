@@ -27,8 +27,8 @@ public class Agent1
     public void Step()
     {
         var action = Observe();
-        if (Name == "A1")
-            Debug.Log(action);
+        //if (Name == "A1")
+        //    Debug.Log(action);
         switch (action)
         {
             case Action.MoveToSource:
@@ -489,7 +489,7 @@ public class Agent1
             action = Action.MoveToSource;
             Interaction = false;
         }
-        Debug.Log(action.ToString());
+        //Debug.Log(action.ToString());
         return action;
     }
 
