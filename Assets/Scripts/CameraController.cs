@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -37,53 +38,56 @@ public class CameraController : MonoBehaviour
 
     void HandleMouseInput()
     {
-        if(Input.mouseScrollDelta.y != 0)
+        if(!EventSystem.current.IsPointerOverGameObject())
         {
-            newZoom += Input.mouseScrollDelta.y * zoomAmmount;
-        }
-
-        if(Input.GetMouseButtonDown(0))
-        {
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            float entry;
-
-            if(plane.Raycast(ray, out entry))
+            if(Input.mouseScrollDelta.y != 0)
             {
-                dragStartPosition = ray.GetPoint(entry);
+                newZoom += Input.mouseScrollDelta.y * zoomAmmount;
             }
-        }
-        if(Input.GetMouseButton(0))
-        {
-             Plane plane = new Plane(Vector3.up, Vector3.zero);
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            float entry;
-
-            if(plane.Raycast(ray, out entry))
+            if(Input.GetMouseButtonDown(0))
             {
-                dragCurrentPosition = ray.GetPoint(entry);
+                Plane plane = new Plane(Vector3.up, Vector3.zero);
 
-                newPosition = transform.position + dragStartPosition - dragCurrentPosition;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                float entry;
+
+                if(plane.Raycast(ray, out entry))
+                {
+                    dragStartPosition = ray.GetPoint(entry);
+                }
             }
-        }
+            if(Input.GetMouseButton(0))
+            {
+                Plane plane = new Plane(Vector3.up, Vector3.zero);
 
-        if(Input.GetMouseButtonDown(2))
-        {
-            rotateStartPosition = Input.mousePosition;
-        }
-        if(Input.GetMouseButton(2))
-        {
-            rotateCurrentPosition = Input.mousePosition;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            Vector3 difference = rotateStartPosition - rotateCurrentPosition;
+                float entry;
 
-            rotateStartPosition = rotateCurrentPosition;
+                if(plane.Raycast(ray, out entry))
+                {
+                    dragCurrentPosition = ray.GetPoint(entry);
 
-            newRotation *= Quaternion.Euler(Vector3.up * (-difference.x/5f));
+                    newPosition = transform.position + dragStartPosition - dragCurrentPosition;
+                }
+            }
+
+            if(Input.GetMouseButtonDown(2))
+            {
+                rotateStartPosition = Input.mousePosition;
+            }
+            if(Input.GetMouseButton(2))
+            {
+                rotateCurrentPosition = Input.mousePosition;
+
+                Vector3 difference = rotateStartPosition - rotateCurrentPosition;
+
+                rotateStartPosition = rotateCurrentPosition;
+
+                newRotation *= Quaternion.Euler(Vector3.up * (-difference.x/5f));
+            }
         }
     }
 

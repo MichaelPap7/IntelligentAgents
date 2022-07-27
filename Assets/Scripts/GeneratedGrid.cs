@@ -10,7 +10,8 @@ using System.Linq;
 public class GeneratedGrid : MonoBehaviour
 {
 
-    public GameObject agentsA;
+    public GameObject agents;
+    public GameObject agentListB;
     public GameObject agentListA;
     public GameObject blockGameObject;
     public GameObject agent1GameObject;
@@ -115,14 +116,24 @@ public class GeneratedGrid : MonoBehaviour
         GameManager.Script = this;
         GameManager.GameSpeed = 5.0f;
 
+        for (int i = 0; i < GameManager.AgentsV1.Count; i++){
+            int tempInt = i;
+            GameObject button = (GameObject) Instantiate (agents);
+            button.GetComponentInChildren<Text>().text = GameManager.AgentsV1[i].Name;
+            button.GetComponent<Button>().onClick.AddListener(
+                () => {PointOfView(GameManager.AgentsV1[tempInt].Name);}
+            );
+            button.transform.parent = agentListA.transform;
+        }
+
         for (int i = 0; i < GameManager.AgentsV2.Count; i++){
             int tempInt = i;
-            GameObject button = (GameObject) Instantiate (agentsA);
+            GameObject button = (GameObject) Instantiate (agents);
             button.GetComponentInChildren<Text>().text = GameManager.AgentsV2[i].Name;
             button.GetComponent<Button>().onClick.AddListener(
                 () => {PointOfView(GameManager.AgentsV2[tempInt].Name);}
             );
-            button.transform.parent = agentListA.transform;
+            button.transform.parent = agentListB.transform;
         }
     }
     void PointOfView(string agentName)
