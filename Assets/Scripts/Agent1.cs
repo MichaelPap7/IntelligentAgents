@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
-
+ 
 public class Agent1
 {
     public ConcurrentDictionary<Tuple<int, int>, Cube> Field;

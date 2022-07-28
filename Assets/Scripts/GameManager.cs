@@ -35,6 +35,13 @@ public static class GameManager
     //public bool IsCompleted = false;
 
     public static bool end = false;
+
+    //Stastics
+    public static long MovesDone;
+    public static string Winner;
+    public static long TotalTime;
+    //VillageA_Supplies
+    //VillageB_Supplies
     public static void Setup(int x, int y, int treasures, int energies, int number_agents,int energyPotPrice, int mapPrice)
     {
         Width = x;
@@ -51,9 +58,8 @@ public static class GameManager
             max = y / 50;
         }
         max = max == 0 ? 10 : max;
-        counter = max / 10;
-        VillageA_Supplies = new Supplies() { Crop_Supplies = 8*counter, Gold_Supplies = 8 * counter, Steel_Supplies = 8 * counter, Wood_Supplies = 8 * counter };
-        VillageB_Supplies = new Supplies() { Crop_Supplies = 8 * counter, Gold_Supplies = 8 * counter, Steel_Supplies = 8 * counter, Wood_Supplies = 8 * counter };
+        VillageA_Supplies = new Supplies() { Crop_Supplies = 20*max, Gold_Supplies = 20 * max, Steel_Supplies = 20 * max, Wood_Supplies = 20 * max };
+        VillageB_Supplies = new Supplies() { Crop_Supplies = 20 * max, Gold_Supplies = 20 * max, Steel_Supplies = 20 * max, Wood_Supplies = 20 * max };
         energy_pot_restoration = max * energy_pot_restoration;
         GenerateField(x, y, treasures, energies, number_agents * 2);
         foreach (var key in Field.Keys)

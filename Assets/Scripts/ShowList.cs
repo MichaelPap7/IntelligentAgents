@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public class ShowList : MonoBehaviour
+public class ShowList : MonoBehaviour, IPointerClickHandler
 {
 
     public GameObject Panel;
@@ -35,7 +37,8 @@ public class ShowList : MonoBehaviour
 
     public void OpenPanel()
     {
-        if(Panel != null)
+        Debug.Log("Enter1");
+        if (Panel != null)
         {
             bool isActive = Panel.activeSelf;
 
@@ -44,29 +47,53 @@ public class ShowList : MonoBehaviour
 
         if(UIPanel != null)
         {
+            Debug.Log("Enter1");
             bool isActive = UIPanel.activeSelf;
 
             UIPanel.SetActive(!isActive);
-
-            GameManager.Setup(Int32.Parse(x.text), Int32.Parse(y.text), Int32.Parse(treasureAmmount.text), Int32.Parse(energyAmmount.text), Int32.Parse(agentAmmount.text),Int32.Parse(energyPrice.text),Int32.Parse(mapPrice.text));
-            GameObject worldController = new GameObject(); 
-            GeneratedGrid script = worldController.AddComponent<GeneratedGrid>();
-            script.agents = agents; 
-            script.agentListB = agentListB; 
-            script.agentListA = agentListA; 
-            script.blockGameObject = blockGameObject; 
-            script.agent1GameObject = agent1GameObject; 
-            script.agent2GameObject = agent2GameObject; 
-            script.village1GameObject = village1GameObject; 
-            script.village2GameObject = village2GameObject; 
-            script.energyGameObject = energyGameObject; 
-            script.treasureGameObject = treasureGameObject; 
-            script.ironGameObject = ironGameObject; 
-            script.goldGameObject = goldGameObject;
-            script.cropGameObject = cropGameObject;
-            script.objectToSpawn = objectToSpawn;
-            script.fogOfWar = fogOfWar; 
-            Instantiate(worldController,new Vector3(0,0,0),Quaternion.identity);
+            Debug.Log("Enter2");
+            
         }
+    }
+    #region IPointerClickHandler implementation
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        int dimensionX = Int32.Parse(getValueOrPlaceHolder(x));
+        int dimensionY = Int32.Parse(getValueOrPlaceHolder(y));
+        int treasures = Int32.Parse(getValueOrPlaceHolder(treasureAmmount));
+        int energies = Int32.Parse(getValueOrPlaceHolder(energyAmmount));
+        int agentNum = Int32.Parse(getValueOrPlaceHolder(agentAmmount));
+        int energy_price = Int32.Parse(getValueOrPlaceHolder(energyPrice));
+        int map_price = Int32.Parse(getValueOrPlaceHolder(mapPrice));
+        GameManager.Setup(dimensionX, dimensionY, treasures, energies, agentNum, energy_price, map_price);
+        GameObject worldController = new GameObject();
+        GeneratedGrid script = worldController.AddComponent<GeneratedGrid>();
+        script.agents = agents;
+        script.agentListB = agentListB;
+        script.agentListA = agentListA;
+        script.blockGameObject = blockGameObject;
+        script.agent1GameObject = agent1GameObject;
+        script.agent2GameObject = agent2GameObject;
+        script.village1GameObject = village1GameObject;
+        script.village2GameObject = village2GameObject;
+        script.energyGameObject = energyGameObject;
+        script.treasureGameObject = treasureGameObject;
+        script.ironGameObject = ironGameObject;
+        script.goldGameObject = goldGameObject;
+        script.cropGameObject = cropGameObject;
+        script.objectToSpawn = objectToSpawn;
+        script.fogOfWar = fogOfWar;
+        Instantiate(worldController, new Vector3(0, 0, 0), Quaternion.identity);
+    }
+
+    #endregion
+    private string getValueOrPlaceHolder(InputField item)
+    {
+        if (String.IsNullOrEmpty(item.text))
+        {
+            return ((Text)item.placeholder).text;
+        }
+        return item.text;
     }
 }

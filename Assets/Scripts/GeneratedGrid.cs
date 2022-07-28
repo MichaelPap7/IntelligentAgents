@@ -28,7 +28,7 @@ public class GeneratedGrid : MonoBehaviour
     
     public bool IsStarted = false;
 
-    public Agent1 AgentView;
+    public List<Agent1> AgentView = new List<Agent1>();
     public bool FullViewEnabled = false;
 
     public int worldSizeX = 40;
@@ -51,7 +51,6 @@ public class GeneratedGrid : MonoBehaviour
         //test.AddComponent(typeof(Agent1));
         //var script = test.GetComponent(typeof(Agent1));
         //script = agent;
-        Debug.Log(GameManager.Field.Count);
         
         for(int x = 0; x < GameManager.Width; x++) {
             for(int z = 0; z < GameManager.Height; z++) {                        
@@ -144,6 +143,7 @@ public class GeneratedGrid : MonoBehaviour
             try
             {
                 agent1 = GameManager.AgentsV1.Single(x => x.Name == agentName);
+                //Debug.Log(agent1.Name);
                 
             }
             catch(Exception e)
@@ -157,6 +157,7 @@ public class GeneratedGrid : MonoBehaviour
             try
             {
                 agent1 = GameManager.AgentsV2.Single(x => x.Name == agentName);
+                //Debug.Log(agent1.Name);
             }
             catch (Exception e)
             {
@@ -165,8 +166,17 @@ public class GeneratedGrid : MonoBehaviour
         }
         if (agent1 != null)
         {
-            AgentView = agent1;
+            AgentView.Add(agent1);
             FullViewEnabled = true;
+            Debug.Log(AgentView[0].Name);
+            ChangeViewField(AgentView[0].Field);
+            AgentView.Clear();
+        }
+        else
+        {
+            AgentView.Clear();
+            FullViewEnabled = true;
+            ChangeViewField(GameManager.Field);
         }
         
     }
@@ -251,13 +261,14 @@ public class GeneratedGrid : MonoBehaviour
                 }
 
             }
-            if(AgentView != null)
+            if(AgentView.Count != 0)
             {
-                ChangeViewField(AgentView.Field);
+                
+                
             }
             else if (FullViewEnabled == true)
             {
-                ChangeViewField(GameManager.Field);
+                
                 FullViewEnabled = false;
             }
             //if (!AgentsV2[0].Stopped)
