@@ -51,7 +51,6 @@ public class GeneratedGrid : MonoBehaviour
         //test.AddComponent(typeof(Agent1));
         //var script = test.GetComponent(typeof(Agent1));
         //script = agent;
-        GameManager.Setup(worldSizeX, worldSizeZ, 1, 2, 5, new Supplies() { Crop_Supplies = 8, Gold_Supplies = 8, Steel_Supplies = 8, Wood_Supplies = 8 }, new Supplies() { Crop_Supplies = 8, Gold_Supplies = 8, Steel_Supplies = 8, Wood_Supplies = 8 });
         Debug.Log(GameManager.Field.Count);
         
         for(int x = 0; x < GameManager.Width; x++) {

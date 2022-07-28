@@ -3,7 +3,31 @@ guid: 236f82539f1a47c45933967e96f91517
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Panel: {instanceID: 0}
+  - UIPanel: {instanceID: 0}
+  - x: {instanceID: 0}
+  - y: {instanceID: 0}
+  - treasureAmmount: {instanceID: 0}
+  - energyAmmount: {instanceID: 0}
+  - energyPrice: {instanceID: 0}
+  - mapPrice: {instanceID: 0}
+  - agentAmmount: {instanceID: 0}
+  - agents: {fileID: 1635065282066514889, guid: 0139eb53d9051a14c82f25dbd7ce90fe, type: 3}
+  - agentListB: {instanceID: 0}
+  - agentListA: {instanceID: 0}
+  - blockGameObject: {fileID: 136656920844690106, guid: 0e4ebb8938047b04dba695cf2d1c1a60, type: 3}
+  - agent1GameObject: {fileID: 5203568060135454463, guid: b0e6f0078194b3e45a12e49217047ff9, type: 3}
+  - agent2GameObject: {fileID: 4968414231936882997, guid: ec5db6837c65db1469e24f8dccebcec7, type: 3}
+  - village1GameObject: {fileID: 4801196382327148478, guid: 9fc6531668ba0b24cb460efb598928e9, type: 3}
+  - village2GameObject: {fileID: 827309796914793995, guid: 0f62289236c8c6343a4716b985dc8cc1, type: 3}
+  - energyGameObject: {fileID: 6353758576680749137, guid: 2d3e81c93eb02ff4390b630ea32049ad, type: 3}
+  - treasureGameObject: {fileID: 6956421025060324869, guid: 262dee19d8d024d4688168f8da1fb96e, type: 3}
+  - ironGameObject: {fileID: 2959461321853654081, guid: 55674989c8f4d824a97ce066ab2dc815, type: 3}
+  - goldGameObject: {fileID: 6928448609387862142, guid: 9d6933d9ee2290342b55e0c5bfcfa56b, type: 3}
+  - cropGameObject: {fileID: 1036864038494085820, guid: 52e3e677862d0a14ba1d74df1978f2f9, type: 3}
+  - objectToSpawn: {fileID: 7719255337993644491, guid: 8d4967802d7222342a7ab11ca00db49c, type: 3}
+  - fogOfWar: {fileID: 3605239722652080402, guid: 69a785fc752e4044db571f62953cd2cd, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

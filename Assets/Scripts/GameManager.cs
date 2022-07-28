@@ -17,10 +17,7 @@ public static class GameManager
     public static List<Agent1> AgentsV1 = new List<Agent1>();
     public static List<Agent1> AgentsV2 = new List<Agent1>();
     public static Supplies VillageA_Supplies = new Supplies();
-    public static Supplies VillageB_Supplies = new Supplies();
-    public static int energy_pot_price = 3;
-    public static int map_price = 3;
-    public static int energy_pot_restoration = 10;
+    public static Supplies VillageB_Supplies = new Supplies();    
     public static GeneratedGrid Script;
     
     //InputValues
@@ -30,20 +27,34 @@ public static class GameManager
     public static int EnergyFountainsCount;
     public static int NumberOfAgents;
     public static float GameSpeed;
+    public static int energy_pot_price = 3;
+    public static int map_price = 3;
+    public static int energy_pot_restoration = 10;
 
     //public bool IsStarted = false;
     //public bool IsCompleted = false;
 
     public static bool end = false;
-    public static void Setup(int x, int y, int treasures, int energies, int number_agents, Supplies villageA_Supplies, Supplies villageB_Supplies)
+    public static void Setup(int x, int y, int treasures, int energies, int number_agents,int energyPotPrice, int mapPrice)
     {
         Width = x;
         Height = y;
         TreasuresCount = treasures;
         EnergyFountainsCount = energies;
         NumberOfAgents = number_agents;
-        VillageA_Supplies = villageA_Supplies;
-        VillageB_Supplies = villageB_Supplies;
+        energy_pot_price = energyPotPrice;
+        map_price = mapPrice;
+        int counter = 0;
+        int max = x / 35;
+        if(y / 50 > max)
+        {
+            max = y / 50;
+        }
+        max = max == 0 ? 10 : max;
+        counter = max / 10;
+        VillageA_Supplies = new Supplies() { Crop_Supplies = 8*counter, Gold_Supplies = 8 * counter, Steel_Supplies = 8 * counter, Wood_Supplies = 8 * counter };
+        VillageB_Supplies = new Supplies() { Crop_Supplies = 8 * counter, Gold_Supplies = 8 * counter, Steel_Supplies = 8 * counter, Wood_Supplies = 8 * counter };
+        energy_pot_restoration = max * energy_pot_restoration;
         GenerateField(x, y, treasures, energies, number_agents * 2);
         foreach (var key in Field.Keys)
         {
