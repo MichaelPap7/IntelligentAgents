@@ -35,6 +35,8 @@ public class ShowList : MonoBehaviour, IPointerClickHandler
     public GameObject objectToSpawn;
     public GameObject fogOfWar;
 
+    public GameObject EndScreen;
+
     public void OpenPanel()
     {
         Debug.Log("Enter1");
@@ -84,6 +86,7 @@ public class ShowList : MonoBehaviour, IPointerClickHandler
         script.cropGameObject = cropGameObject;
         script.objectToSpawn = objectToSpawn;
         script.fogOfWar = fogOfWar;
+        script.EndScreen = EndScreen;
         Instantiate(worldController, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
