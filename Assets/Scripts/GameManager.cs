@@ -40,6 +40,7 @@ public static class GameManager
     public static long MovesDone;
     public static string Winner;
     public static long TotalTime;
+    public static long TotalInfoExchanged;
     //VillageA_Supplies
     //VillageB_Supplies
     public static void Setup(int x, int y, int treasures, int energies, int number_agents,int energyPotPrice, int mapPrice)
