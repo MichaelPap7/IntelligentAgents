@@ -198,7 +198,7 @@ public class Agent1
         {
             if (agent.Position.Equals(place)) { return agent; }
         }
-        return null; ;
+        return null; 
     }
 
     private List<Tuple<int, int>> PlacesToCheck()

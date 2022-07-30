@@ -25,6 +25,8 @@ public class GeneratedGrid : MonoBehaviour
     public GameObject cropGameObject;
     public GameObject objectToSpawn;
     public GameObject fogOfWar;
+
+    public GameObject EndScreen;
     
     public bool IsStarted = false;
 
@@ -280,6 +282,7 @@ public class GeneratedGrid : MonoBehaviour
             if (GameManager.EndGame() == "A")
             {
                 Debug.Log("VillageA");
+                
             }
             if (GameManager.EndGame() == "B")
             {
