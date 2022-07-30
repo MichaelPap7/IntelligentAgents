@@ -609,7 +609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &140917997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1634,7 +1634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &335791093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3761,7 +3761,7 @@ MonoBehaviour:
   cropGameObject: {fileID: 0}
   objectToSpawn: {fileID: 0}
   fogOfWar: {fileID: 0}
-  EndGame: {fileID: 0}
+  EndScreen: {fileID: 0}
 --- !u!1 &1007417033
 GameObject:
   m_ObjectHideFlags: 0
@@ -4153,7 +4153,7 @@ MonoBehaviour:
   cropGameObject: {fileID: 0}
   objectToSpawn: {fileID: 0}
   fogOfWar: {fileID: 0}
-  EndGame: {fileID: 0}
+  EndScreen: {fileID: 0}
 --- !u!114 &1058169521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5404,7 +5404,7 @@ MonoBehaviour:
   cropGameObject: {fileID: 1036864038494085820, guid: 52e3e677862d0a14ba1d74df1978f2f9, type: 3}
   objectToSpawn: {fileID: 7719255337993644491, guid: 8d4967802d7222342a7ab11ca00db49c, type: 3}
   fogOfWar: {fileID: 3605239722652080402, guid: 69a785fc752e4044db571f62953cd2cd, type: 3}
-  EndGame: {fileID: 140917996}
+  EndScreen: {fileID: 0}
 --- !u!114 &1567906051
 MonoBehaviour:
   m_ObjectHideFlags: 0
