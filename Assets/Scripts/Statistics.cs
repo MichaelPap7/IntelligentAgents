@@ -7,10 +7,11 @@ public class Statistics : MonoBehaviour
 {
 
     private Text winner_TextComponent;
+    public GameObject winnerText;
 
     private void Awake() 
     {
-        winner_TextComponent = GetComponent<WinnerValue>();
+        winner_TextComponent = winnerText.GetComponent<Text>();
 
         winner_TextComponent.text = "Village 2";
     }
