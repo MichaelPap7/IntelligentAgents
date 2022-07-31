@@ -209,9 +209,9 @@ public static class GameManager
         agent1.Field = DefaultA;
         agent1.Role = role;
         agent1.Position = Tuple.Create(Field.First(x => x.Value.value == PlaceContent.Vilage1).Value.x, Field.First(x => x.Value.value == PlaceContent.Vilage1).Value.y);
-        agent1.Energy = 900;
+        agent1.Energy = 1600;
         agent1.Balance = 25;
-        agent1.Energy_Pots = 3;
+        agent1.Energy_Pots = 10;
         agent1.Speed = 1;
 
         return agent1;
@@ -224,9 +224,9 @@ public static class GameManager
         agent1.Field = DefaultB;
         agent1.Role = PlaceContent.Empty;
         agent1.Position = Tuple.Create(Field.First(x => x.Value.value == PlaceContent.Vilage2).Value.x, Field.First(x => x.Value.value == PlaceContent.Vilage2).Value.y);
-        agent1.Energy = 900;
+        agent1.Energy = 1600;
         agent1.Balance = 25;
-        agent1.Energy_Pots = 3;
+        agent1.Energy_Pots = 10;
         agent1.Speed = 2;
 
         return agent1;

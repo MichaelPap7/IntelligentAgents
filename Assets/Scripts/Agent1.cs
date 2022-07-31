@@ -140,6 +140,7 @@ public class Agent1
         else
         {
             MergeKnowledge(field);
+            GameManager.TotalInfoExchanged++;
         }
 
     }
