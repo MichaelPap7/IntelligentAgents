@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
+using System.Diagnostics;
 
 public class GeneratedGrid : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class GeneratedGrid : MonoBehaviour
     public GameObject cropGameObject;
     public GameObject objectToSpawn;
     public GameObject fogOfWar;
+    public GameObject EndScreend;
 
     public GameObject EndScreen;
     
@@ -40,6 +42,7 @@ public class GeneratedGrid : MonoBehaviour
     private float gridOffset = 1.1f;
 
     private List<Vector3> blockPositions = new List<Vector3>();
+    private Stopwatch stopWatch = new Stopwatch();
 
     void Start()
     {   
@@ -170,7 +173,6 @@ public class GeneratedGrid : MonoBehaviour
         {
             AgentView.Add(agent1);
             FullViewEnabled = true;
-            Debug.Log(AgentView[0].Name);
             ChangeViewField(AgentView[0].Field);
             AgentView.Clear();
         }
@@ -242,7 +244,12 @@ public class GeneratedGrid : MonoBehaviour
     void Update() {
         if (!GameManager.end)
         {
-            Thread.Sleep(GameManager.GameSpeed == 1 ? 1000 : GameManager.GameSpeed == 0.5 ? 2000 : GameManager.GameSpeed == 2 ? 500 : GameManager.GameSpeed == 5 ? 100 : 10);
+            GameManager.MovesDone++;
+            if (!stopWatch.IsRunning)
+            {
+                stopWatch.Start();
+            }
+            Thread.Sleep(GameManager.GameSpeed == 1 ? 1000 : GameManager.GameSpeed == 0.5 ? 2000 : GameManager.GameSpeed == 2 ? 500 : GameManager.GameSpeed == 5 ? 50 : 10);
             //Debug.Log("Agents Run");
             for (int i = 0; i < GameManager.AgentsV1.Count; i++)
             {
@@ -281,12 +288,23 @@ public class GeneratedGrid : MonoBehaviour
             //Debug.Log("CheckEndgame");
             if (GameManager.EndGame() == "A")
             {
-                Debug.Log("VillageA");
-                
+                //Debug.Log("VillageA");
+                GameManager.end = true;
+                stopWatch.Stop();
+                GameManager.TotalTime = stopWatch.ElapsedMilliseconds / 1000;
+                GameManager.Winner = "VillageA";
+                EndScreen.SetActive(true);
+
+
             }
             if (GameManager.EndGame() == "B")
             {
-                Debug.Log("VillageB");
+                //Debug.Log("VillageB");
+                GameManager.end = true;
+                stopWatch.Stop();
+                GameManager.TotalTime = stopWatch.ElapsedMilliseconds / 1000;
+                GameManager.Winner = "VillageB";
+                EndScreen.SetActive(true);
             }
             if (GameManager.Field.Values.All(x => x.Quantity == 0) && GameManager.EndGame() != "A" && GameManager.EndGame() != "B")
             {
@@ -302,9 +320,15 @@ public class GeneratedGrid : MonoBehaviour
                 //Debug.Log("Steel" + GameManager.VillageB_Supplies.Steel_Supplies.ToString());
                 //Debug.Log("Gold" + GameManager.VillageB_Supplies.Gold_Supplies.ToString());
 
-                Debug.Log("Unknown");
+                //Debug.Log("Unknown");
+                GameManager.end = true;
+                stopWatch.Stop();
+                GameManager.TotalTime = stopWatch.ElapsedMilliseconds / 1000;
+                GameManager.Winner = "Unknown";
+                EndScreen.SetActive(true);
             }
         }
+        UnityEngine.Debug.Log(GameManager.VillageA_Supplies.Wood_Supplies);
         //Debug.Log("Unknown");
 
     }

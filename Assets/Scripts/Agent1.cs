@@ -140,6 +140,7 @@ public class Agent1
         else
         {
             MergeKnowledge(field);
+            GameManager.TotalInfoExchanged++;
         }
 
     }
@@ -476,11 +477,11 @@ public class Agent1
         {
             action = Action.BuyEnergy;
         }
-        else if (Cargo != PlaceContent.Empty && (Role != PlaceContent.Empty ? Field[Position].value == PlaceContent.Vilage1 : Field[Position].value == PlaceContent.Vilage2))
+        else if (IsToDeposit())
         {
             action = Action.Deposit;
         }
-        else if (Cargo != PlaceContent.Empty)
+        else if (IsCarrying())
         {
             action = Action.ReturnToVillage;
         }
@@ -491,6 +492,16 @@ public class Agent1
         }
         //Debug.Log(action.ToString());
         return action;
+    }
+
+    private bool IsCarrying()
+    {
+        return Cargo != PlaceContent.Empty;
+    }
+
+    private bool IsToDeposit()
+    {
+        return Cargo != PlaceContent.Empty && (Role != PlaceContent.Empty ? Field[Position].value == PlaceContent.Vilage1 : Field[Position].value == PlaceContent.Vilage2);
     }
 
     private bool IsToBuyEnergy()
