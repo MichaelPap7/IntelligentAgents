@@ -254,7 +254,7 @@ public class GeneratedGrid : MonoBehaviour
             {
                 stopWatch.Start();
             }
-            Thread.Sleep(GameManager.GameSpeed == 1 ? 500 : GameManager.GameSpeed == 0.5 ? 1000 : GameManager.GameSpeed == 2 ? 200 : GameManager.GameSpeed == 5 ? 40 : 10);
+            Thread.Sleep(GameManager.GameSpeed == 1 ? 500 : GameManager.GameSpeed == 0.5 ? 800 : GameManager.GameSpeed == 2 ? 200 : GameManager.GameSpeed == 5 ? 40 : 10);
             //Debug.Log("Agents Run");
             for (int i = 0; i < GameManager.AgentsV1.Count; i++)
             {
