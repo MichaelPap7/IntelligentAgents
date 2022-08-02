@@ -4885,7 +4885,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1323902992}
+      - m_Target: {fileID: 968540523}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -4947,6 +4947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2265dcd677750d5459c9ee5a1fcd6358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ResetButton: {fileID: 1323902994}
 --- !u!1 &1380831898
 GameObject:
   m_ObjectHideFlags: 0
