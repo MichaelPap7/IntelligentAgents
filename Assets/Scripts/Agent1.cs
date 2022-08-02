@@ -126,6 +126,7 @@ public class Agent1
         var agent = FindNearbyAgent();
         Interaction = true;
         var field = agent.BuyMap(this);
+        GameManager.TotalInfoExchanged++;
         if (field == null)
         {
             if (Cargo == PlaceContent.Empty)
@@ -140,7 +141,7 @@ public class Agent1
         else
         {
             MergeKnowledge(field);
-            GameManager.TotalInfoExchanged++;
+            
         }
 
     }
