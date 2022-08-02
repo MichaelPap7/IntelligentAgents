@@ -35,6 +35,8 @@ public static class GameManager
     //public bool IsCompleted = false;
 
     public static bool end = false;
+    public static bool start = false;
+    public static bool AlreadyStarted = false;
 
     //Stastics
     public static long MovesDone;
@@ -59,8 +61,8 @@ public static class GameManager
             max = y / 50;
         }
         max = max == 0 ? 10 : max;
-        VillageA_Supplies = new Supplies() { Crop_Supplies = 20*max, Gold_Supplies = 20 * max, Steel_Supplies = 20 * max, Wood_Supplies = 20 * max };
-        VillageB_Supplies = new Supplies() { Crop_Supplies = 20 * max, Gold_Supplies = 20 * max, Steel_Supplies = 20 * max, Wood_Supplies = 20 * max };
+        VillageA_Supplies = new Supplies() { Crop_Supplies = 30*max, Gold_Supplies = 30 * max, Steel_Supplies = 30 * max, Wood_Supplies = 30 * max };
+        VillageB_Supplies = new Supplies() { Crop_Supplies = 30 * max, Gold_Supplies = 30 * max, Steel_Supplies = 30 * max, Wood_Supplies = 30 * max };
         energy_pot_restoration = max * energy_pot_restoration;
         GenerateField(x, y, treasures, energies, number_agents * 2);
         foreach (var key in Field.Keys)
@@ -276,7 +278,7 @@ public static class GameManager
             var empties = Field.Where(x => x.Value.value == PlaceContent.Empty).Select(x => x.Key).ToList().DeepClone();
             var rand_place = empties[random.Next(empties.Count)].DeepClone();
             Field[rand_place].value = PlaceContent.Treasure;
-            Field[rand_place].Quantity = map_price * 20;
+            Field[rand_place].Quantity = agents_number * 2;
         }
 
         for (int i = 0; i < energies; i++)
@@ -286,33 +288,33 @@ public static class GameManager
             Field[rand_place].value = PlaceContent.Energy;
             Field[rand_place].Quantity = energy_pot_price * agents_number * 4;
         }
-        for (int i = 0; i < random.Next(y) * x; i++)
+        for (int i = 0; i < random.Next(1, y) * x; i++)
         {
             var empties = Field.Where(x => x.Value.value == PlaceContent.Empty).Select(x => x.Key).ToList().DeepClone();
             var rand_place = empties[random.Next(empties.Count)].DeepClone();
             Field[rand_place].value = PlaceContent.Crop;
-            Field[rand_place].Quantity = VillageA_Supplies.Crop_Supplies * 3;
+            Field[rand_place].Quantity = VillageA_Supplies.Crop_Supplies / 5;
         }
-        for (int i = 0; i < random.Next(y) * x; i++)
+        for (int i = 0; i < random.Next(1, y) * x; i++)
         {
             var empties = Field.Where(x => x.Value.value == PlaceContent.Empty).Select(x => x.Key).ToList().DeepClone();
             var rand_place = empties[random.Next(empties.Count)].DeepClone();
             Field[rand_place].value = PlaceContent.Wood;
-            Field[rand_place].Quantity = VillageA_Supplies.Wood_Supplies * 3;
+            Field[rand_place].Quantity = VillageA_Supplies.Wood_Supplies / 5;
         }
-        for (int i = 0; i < random.Next(y) * (x - 1); i++)
+        for (int i = 0; i < random.Next(1, y) * (x - 1); i++)
         {
             var empties = Field.Where(x => x.Value.value == PlaceContent.Empty).Select(x => x.Key).ToList().DeepClone();
             var rand_place = empties[random.Next(empties.Count)].DeepClone();
             Field[rand_place].value = PlaceContent.Steel;
-            Field[rand_place].Quantity = VillageA_Supplies.Steel_Supplies * 2;
+            Field[rand_place].Quantity = VillageA_Supplies.Steel_Supplies / 5;
         }
-        for (int i = 0; i < random.Next(y) * (x - 1); i++)
+        for (int i = 0; i < random.Next(1,y) * (x - 1); i++)
         {
             var empties = Field.Where(x => x.Value.value == PlaceContent.Empty).Select(x => x.Key).ToList().DeepClone();
             var rand_place = empties[random.Next(empties.Count)].DeepClone();
             Field[rand_place].value = PlaceContent.Gold;
-            Field[rand_place].Quantity = VillageA_Supplies.Gold_Supplies * 2;
+            Field[rand_place].Quantity = VillageA_Supplies.Gold_Supplies / 5;
         }
         //Print
         //Dictionary<int, string> values = new Dictionary<int, string>();

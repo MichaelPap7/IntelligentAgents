@@ -44,8 +44,8 @@ public class GeneratedGrid : MonoBehaviour
     private List<Vector3> blockPositions = new List<Vector3>();
     private Stopwatch stopWatch = new Stopwatch();
 
-    void Start()
-    {   
+    void Awake()
+    {
         // GameManager.Width = 40;
         // GameManager.Height = 40;
         // GameManager.VillageA_Supplies = new Supplies() { Crop_Supplies = 8, Gold_Supplies = 8, Steel_Supplies = 8, Wood_Supplies = 8 };
@@ -56,8 +56,10 @@ public class GeneratedGrid : MonoBehaviour
         //test.AddComponent(typeof(Agent1));
         //var script = test.GetComponent(typeof(Agent1));
         //script = agent;
-        
-        for(int x = 0; x < GameManager.Width; x++) {
+        if (GameManager.AlreadyStarted)
+            return;
+        GameManager.AlreadyStarted = true;
+        for (int x = 0; x < GameManager.Width; x++) {
             for(int z = 0; z < GameManager.Height; z++) {                        
                 Vector3 pos = new Vector3(x * gridOffset, generateNoise(x,z,30f) * noiseHeight, z * gridOffset);  
                 Vector3 rpos = new Vector3(pos.x, pos.y + .5f, pos.z); 
@@ -122,7 +124,7 @@ public class GeneratedGrid : MonoBehaviour
         for (int i = 0; i < GameManager.AgentsV1.Count; i++){
             int tempInt = i;
             GameObject button = (GameObject) Instantiate (agents);
-            button.GetComponentInChildren<Text>().text = GameManager.AgentsV1[i].Name;
+            button.GetComponentInChildren<Text>().text = GameManager.AgentsV1[tempInt].Name;
             button.GetComponent<Button>().onClick.AddListener(
                 () => {PointOfView(GameManager.AgentsV1[tempInt].Name);}
             );
@@ -138,8 +140,9 @@ public class GeneratedGrid : MonoBehaviour
             );
             button.transform.parent = agentListB.transform;
         }
+        GameManager.start = true;
     }
-    void PointOfView(string agentName)
+    public void PointOfView(string agentName)
     {
         Agent1 agent1 = new Agent1();
 
@@ -242,6 +245,8 @@ public class GeneratedGrid : MonoBehaviour
         }
     }
     void Update() {
+        if(!GameManager.start)
+            return;
         if (!GameManager.end)
         {
             GameManager.MovesDone++;
@@ -249,7 +254,7 @@ public class GeneratedGrid : MonoBehaviour
             {
                 stopWatch.Start();
             }
-            Thread.Sleep(GameManager.GameSpeed == 1 ? 1000 : GameManager.GameSpeed == 0.5 ? 2000 : GameManager.GameSpeed == 2 ? 500 : GameManager.GameSpeed == 5 ? 50 : 10);
+            Thread.Sleep(GameManager.GameSpeed == 1 ? 500 : GameManager.GameSpeed == 0.5 ? 1000 : GameManager.GameSpeed == 2 ? 200 : GameManager.GameSpeed == 5 ? 40 : 10);
             //Debug.Log("Agents Run");
             for (int i = 0; i < GameManager.AgentsV1.Count; i++)
             {
@@ -293,6 +298,8 @@ public class GeneratedGrid : MonoBehaviour
                 stopWatch.Stop();
                 GameManager.TotalTime = stopWatch.ElapsedMilliseconds / 1000;
                 GameManager.Winner = "VillageA";
+                GameManager.start = false;
+                GameManager.AlreadyStarted = false;
                 EndScreen.SetActive(true);
 
 
@@ -304,6 +311,8 @@ public class GeneratedGrid : MonoBehaviour
                 stopWatch.Stop();
                 GameManager.TotalTime = stopWatch.ElapsedMilliseconds / 1000;
                 GameManager.Winner = "VillageB";
+                GameManager.start = false;
+                GameManager.AlreadyStarted = false;
                 EndScreen.SetActive(true);
             }
             if (GameManager.Field.Values.All(x => x.Quantity == 0) && GameManager.EndGame() != "A" && GameManager.EndGame() != "B")
@@ -325,10 +334,12 @@ public class GeneratedGrid : MonoBehaviour
                 stopWatch.Stop();
                 GameManager.TotalTime = stopWatch.ElapsedMilliseconds / 1000;
                 GameManager.Winner = "Unknown";
+                GameManager.start = false;
+                GameManager.AlreadyStarted = false;
                 EndScreen.SetActive(true);
             }
         }
-        UnityEngine.Debug.Log(GameManager.VillageA_Supplies.Wood_Supplies);
+        //UnityEngine.Debug.Log(GameManager.VillageA_Supplies.Wood_Supplies);
         //Debug.Log("Unknown");
 
     }
