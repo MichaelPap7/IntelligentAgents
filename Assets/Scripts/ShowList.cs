@@ -70,6 +70,8 @@ public class ShowList : MonoBehaviour, IPointerClickHandler
         int map_price = Int32.Parse(getValueOrPlaceHolder(mapPrice));
         GameManager.Setup(dimensionX, dimensionY, treasures, energies, agentNum, energy_price, map_price);
         GameObject worldController = new GameObject();
+        worldController.name = "Spawn";
+        worldController.SetActive(false);
         GeneratedGrid script = worldController.AddComponent<GeneratedGrid>();
         script.agents = agents;
         script.agentListB = agentListB;
@@ -87,7 +89,9 @@ public class ShowList : MonoBehaviour, IPointerClickHandler
         script.objectToSpawn = objectToSpawn;
         script.fogOfWar = fogOfWar;
         script.EndScreen = EndScreen;
+        worldController.SetActive(true);
         Instantiate(worldController, new Vector3(0, 0, 0), Quaternion.identity);
+
     }
 
     #endregion
